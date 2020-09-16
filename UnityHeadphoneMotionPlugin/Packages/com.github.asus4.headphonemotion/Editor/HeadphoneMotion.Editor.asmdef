@@ -1,0 +1,15 @@
+{
+    "name": "HeadphoneMotion.Editor",
+    "references": [
+        "GUID:7ad46a9dcab62461fb5881f67ce732f9"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

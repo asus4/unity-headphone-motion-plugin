@@ -56,6 +56,7 @@ static HeadphoneMotionPlugin * _shared;
     if (self = [super init])
     {
         motionManager = [CMHeadphoneMotionManager new];
+        motionManager.delegate = self;
     }
     return self;
 }
@@ -109,11 +110,11 @@ static HeadphoneMotionPlugin * _shared;
 #pragma mark - Unity Bridge
 
 extern "C" {
-    bool _unityHeadphoneDeviceMotionIsAvailable() {
+    bool _unityHeadphoneDeviceMotionIsAvailable(void) {
         return HeadphoneMotionPlugin.shared.isAvailable;
     }
 
-    bool _unityHeadphoneDeviceMotionIsActive() {
+    bool _unityHeadphoneDeviceMotionIsActive(void) {
         return HeadphoneMotionPlugin.shared.isActive;
     }
 
@@ -121,7 +122,7 @@ extern "C" {
         [HeadphoneMotionPlugin.shared start: callback];
     }
 
-    void _unityHeadphoneMotionStop() {
+    void _unityHeadphoneMotionStop(void) {
         [HeadphoneMotionPlugin.shared stop];
     }
 

@@ -15,6 +15,7 @@
 		781245402511AA170054E9FB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7812453E2511AA170054E9FB /* LaunchScreen.storyboard */; };
 		781245432511AA170054E9FB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 781245422511AA170054E9FB /* main.m */; };
 		7812454A2511AAEF0054E9FB /* HeadphoneMotionPlugin.mm in Sources */ = {isa = PBXBuildFile; fileRef = 781245492511AAEF0054E9FB /* HeadphoneMotionPlugin.mm */; };
+		7830BC622511B31700DDE7A3 /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7830BC612511B31700DDE7A3 /* CoreMotion.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		781245412511AA170054E9FB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		781245422511AA170054E9FB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		781245492511AAEF0054E9FB /* HeadphoneMotionPlugin.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = HeadphoneMotionPlugin.mm; sourceTree = "<group>"; };
+		7830BC612511B31700DDE7A3 /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -38,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7830BC622511B31700DDE7A3 /* CoreMotion.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -49,6 +52,7 @@
 			children = (
 				7812452F2511AA160054E9FB /* HeadphoneMotionPlugin */,
 				7812452E2511AA160054E9FB /* Products */,
+				7830BC602511B31600DDE7A3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -77,6 +81,14 @@
 				781245422511AA170054E9FB /* main.m */,
 			);
 			path = HeadphoneMotionPlugin;
+			sourceTree = "<group>";
+		};
+		7830BC602511B31600DDE7A3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7830BC612511B31700DDE7A3 /* CoreMotion.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -8,7 +8,7 @@
 #import "ViewController.h"
 
 
-extern void _unityStopHeadphoneMotion(void);
+extern void _unityHeadphoneMotionStop(void);
 
 @interface ViewController ()
 
@@ -18,7 +18,7 @@ extern void _unityStopHeadphoneMotion(void);
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    _unityStopHeadphoneMotion();
+    _unityHeadphoneMotionStop();
 }
 
 

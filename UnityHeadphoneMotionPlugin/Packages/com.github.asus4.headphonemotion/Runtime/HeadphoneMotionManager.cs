@@ -27,6 +27,9 @@ namespace HeadphoneMotion
         public double3 userAcceleration;
         public double4 rotation;
         public DeviceSensorLocation location;
+
+        public Vector3 UserAcceleration => new Vector3((float)userAcceleration.x, (float)userAcceleration.y, (float)userAcceleration.z);
+        public Quaternion Rotation => new Quaternion((float)rotation.x, (float)rotation.y, (float)rotation.z, (float)rotation.w);
     }
 
     public class HeadphoneMotionManager
@@ -42,7 +45,7 @@ namespace HeadphoneMotion
 
         public static bool IsAvailable => _unityHeadphoneDeviceMotionIsAvailable();
         public static bool IsActive => _unityHeadphoneDeviceMotionIsActive();
-        public static bool IsConnected { get; private set; } = false;
+        // public static bool IsConnected { get; private set; } = false;
 
         public static event Action OnConnected;
         public static event Action OnDisconnected;
@@ -62,7 +65,6 @@ namespace HeadphoneMotion
         [AOT.MonoPInvokeCallback(typeof(HeadphoneMotionDelegate))]
         private static void OnMotionUpdate(HeadphoneMotionData motionData)
         {
-            Debug.Log("OnMotionUpdate");
             if (OnUpdated != null)
             {
                 OnUpdated(motionData);
@@ -72,8 +74,7 @@ namespace HeadphoneMotion
         [AOT.MonoPInvokeCallback(typeof(HeadphoneMotionEventDelegate))]
         private static void OnMotionEvent(bool connected)
         {
-            Debug.Log("OnMotionEvent: " + (connected ? "Connected" : "Disconneted"));
-            IsConnected = connected;
+            // IsConnected = connected;
             if (OnConnected != null)
             {
                 OnConnected();

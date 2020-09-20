@@ -4,9 +4,7 @@
       "version": "file:com.github.asus4.headphonemotion",
       "depth": 0,
       "source": "embedded",
-      "dependencies": {
-        "com.unity.mathematics": "1.2.1"
-      }
+      "dependencies": {}
     },
     "com.unity.collab-proxy": {
       "version": "1.2.16",

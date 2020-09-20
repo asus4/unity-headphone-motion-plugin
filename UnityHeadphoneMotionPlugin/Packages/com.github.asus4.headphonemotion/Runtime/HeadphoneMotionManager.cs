@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using UnityEngine;
-using Unity.Mathematics;
 
 namespace HeadphoneMotion
 {
 
-
+    // CMDeviceMotionSensorLocation
     public enum DeviceSensorLocation
     {
         Default = 0,
@@ -22,30 +21,18 @@ namespace HeadphoneMotion
     ///   CMDeviceMotionSensorLocation location;
     /// } HeadphoneMotionData;
     /// </summary>
-    public struct HeadphoneMotionData
+    [StructLayout(LayoutKind.Sequential)]
+    public readonly struct HeadphoneMotionData
     {
-        public double3 userAcceleration;
-        public double4 rotation;
-        public DeviceSensorLocation location;
-
-        public Vector3 UserAcceleration => new Vector3((float)userAcceleration.x, (float)userAcceleration.y, (float)userAcceleration.z);
-        public Quaternion Rotation => new Quaternion((float)rotation.x, (float)rotation.y, (float)rotation.z, (float)rotation.w);
+        public Vector3 userAcceleration { get; }
+        public Quaternion rotation { get; }
+        public DeviceSensorLocation location { get; }
     }
 
     public class HeadphoneMotionManager
     {
-        // typedef void (*UnityHeadphoneMotionCallback)(HeadphoneMotionData motion);
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = true)]
-        private delegate void HeadphoneMotionDelegate(HeadphoneMotionData motionData);
-
-        // typedef void (*UnityHeadphoneMotionEventCallback)(BOOL connected);
-        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = true)]
-        private delegate void HeadphoneMotionEventDelegate(bool connected);
-
-
         public static bool IsAvailable => _unityHeadphoneDeviceMotionIsAvailable();
         public static bool IsActive => _unityHeadphoneDeviceMotionIsActive();
-        // public static bool IsConnected { get; private set; } = false;
 
         public static event Action OnConnected;
         public static event Action OnDisconnected;
@@ -62,6 +49,11 @@ namespace HeadphoneMotion
             _unityHeadphoneMotionStop();
         }
 
+
+        // typedef void (*UnityHeadphoneMotionCallback)(HeadphoneMotionData motion);
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = true)]
+        private delegate void HeadphoneMotionDelegate(HeadphoneMotionData motionData);
+
         [AOT.MonoPInvokeCallback(typeof(HeadphoneMotionDelegate))]
         private static void OnMotionUpdate(HeadphoneMotionData motionData)
         {
@@ -70,6 +62,10 @@ namespace HeadphoneMotion
                 OnUpdated(motionData);
             }
         }
+
+        // typedef void (*UnityHeadphoneMotionEventCallback)(BOOL connected);
+        [UnmanagedFunctionPointer(CallingConvention.Cdecl, SetLastError = true)]
+        private delegate void HeadphoneMotionEventDelegate(bool connected);
 
         [AOT.MonoPInvokeCallback(typeof(HeadphoneMotionEventDelegate))]
         private static void OnMotionEvent(bool connected)

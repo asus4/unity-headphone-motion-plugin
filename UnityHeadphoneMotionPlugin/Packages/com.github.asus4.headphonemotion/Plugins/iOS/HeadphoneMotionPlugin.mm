@@ -11,13 +11,22 @@
 
 #pragma mark - typedef
 
-
-/*
- motion QuaternionX 0.187218 QuaternionY -0.097452 QuaternionZ 0.050883 QuaternionW 0.976147 UserAccelX -0.000190 UserAccelY 0.021194 UserAccelZ -0.028151 RotationRateX 0.933931 RotationRateY 0.392370 RotationRateZ 0.340124 MagneticFieldX 0.000000 MagneticFieldY 0.000000 MagneticFieldZ 0.000000 MagneticFieldAccuracy -1 Heading 0.000000 SensorLocation 2 @ 4277.461094
- */
 typedef struct {
-    CMAcceleration userAcceleration;
-    CMQuaternion rotation;
+    float x;
+    float y;
+    float z;
+} float3;
+
+typedef struct {
+    float x;
+    float y;
+    float z;
+    float w;
+} float4;
+
+typedef struct {
+    float3 userAcceleration;
+    float4 rotation;
     CMDeviceMotionSensorLocation location;
 } HeadphoneMotionData;
 
@@ -81,16 +90,22 @@ static HeadphoneMotionPlugin * _shared;
         }
 
         HeadphoneMotionData data;
-        data.userAcceleration = motion.userAcceleration;
         data.location = motion.sensorLocation;
+        
+        CMAcceleration acc = motion.userAcceleration;
+        data.userAcceleration = float3 {
+            (float)acc.x,
+            (float)acc.y,
+            (float)acc.z
+        };
         
         // Convert quaternion to Unity space
         CMQuaternion rot = motion.attitude.quaternion;
-        data.rotation = CMQuaternion{
-            rot.x,
-            rot.z,
-            rot.y,
-            -rot.w
+        data.rotation = float4 {
+            (float)rot.x,
+            (float)rot.z,
+            (float)rot.y,
+            (float)-rot.w
         };
 
         callback(data);

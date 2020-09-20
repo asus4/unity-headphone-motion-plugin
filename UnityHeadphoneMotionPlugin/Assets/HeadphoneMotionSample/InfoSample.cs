@@ -95,8 +95,8 @@ public class InfoSample : MonoBehaviour
         if (isActive)
         {
             sb.AppendLine("motion:");
-            sb.AppendLine($"userAcceleration: {data.UserAcceleration}");
-            sb.AppendLine($"rotation: {data.Rotation}");
+            sb.AppendLine($"userAcceleration: {data.userAcceleration}");
+            sb.AppendLine($"rotation: {data.rotation}");
             sb.AppendLine($"DeviceSensorLocation: {data.location}");
         }
         infoLabel.text = sb.ToString();
@@ -104,6 +104,6 @@ public class InfoSample : MonoBehaviour
 
     void UpdateAxis(HeadphoneMotionData data)
     {
-        axis.transform.localRotation = data.Rotation;
+        axis.transform.localRotation = data.rotation;
     }
 }

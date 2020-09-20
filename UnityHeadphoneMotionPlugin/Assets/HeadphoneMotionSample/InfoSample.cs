@@ -9,6 +9,7 @@ public class InfoSample : MonoBehaviour
 {
     [SerializeField] Text infoLabel = null;
     [SerializeField] Button toggleButton = null;
+    [SerializeField] Transform axis = null;
 
     StringBuilder sb = new StringBuilder();
     volatile bool needUpdate = true;
@@ -38,7 +39,7 @@ public class InfoSample : MonoBehaviour
             needUpdate = true;
         };
 
-        UpdateInfo();
+        UpdateInfo(motionData);
     }
 
     void OnDisable()
@@ -51,8 +52,14 @@ public class InfoSample : MonoBehaviour
     {
         if (needUpdate)
         {
-            UpdateInfo();
+            HeadphoneMotionData data;
+            lock (lockObj)
+            {
+                data = motionData;
+            }
             needUpdate = false;
+            UpdateInfo(data);
+            UpdateAxis(data);
         }
     }
     void OnToggleButtonClick()
@@ -79,13 +86,8 @@ public class InfoSample : MonoBehaviour
         }
     }
 
-    void UpdateInfo()
+    void UpdateInfo(HeadphoneMotionData data)
     {
-        HeadphoneMotionData data;
-        lock (lockObj)
-        {
-            data = motionData;
-        }
         bool isActive = HeadphoneMotionManager.IsActive;
         sb.Clear();
         sb.AppendLine($"available: {HeadphoneMotionManager.IsAvailable}");
@@ -98,5 +100,10 @@ public class InfoSample : MonoBehaviour
             sb.AppendLine($"DeviceSensorLocation: {data.location}");
         }
         infoLabel.text = sb.ToString();
+    }
+
+    void UpdateAxis(HeadphoneMotionData data)
+    {
+        axis.transform.localRotation = data.Rotation;
     }
 }

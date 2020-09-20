@@ -82,8 +82,16 @@ static HeadphoneMotionPlugin * _shared;
 
         HeadphoneMotionData data;
         data.userAcceleration = motion.userAcceleration;
-        data.rotation = motion.attitude.quaternion;
         data.location = motion.sensorLocation;
+        
+        // Convert quaternion to Unity space
+        CMQuaternion rot = motion.attitude.quaternion;
+        data.rotation = CMQuaternion{
+            rot.x,
+            rot.z,
+            rot.y,
+            -rot.w
+        };
 
         callback(data);
     }];

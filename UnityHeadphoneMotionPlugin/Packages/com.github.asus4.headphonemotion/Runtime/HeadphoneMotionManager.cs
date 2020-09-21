@@ -15,11 +15,7 @@ namespace HeadphoneMotion
     }
 
     /// <summary>
-    /// typedef struct {
-    ///   CMAcceleration userAcceleration;
-    ///   CMQuaternion rotation;
-    ///   CMDeviceMotionSensorLocation location;
-    /// } HeadphoneMotionData;
+    /// CMDeviceMotion
     /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public readonly struct HeadphoneMotionData
@@ -29,21 +25,51 @@ namespace HeadphoneMotion
         public DeviceSensorLocation location { get; }
     }
 
+    /// <summary>
+    /// A simple bridge of CMHeadphoneMotionManager
+    /// https://developer.apple.com/documentation/coremotion/cmheadphonemotionmanager
+    /// </summary>
     public class HeadphoneMotionManager
     {
+        /// <summary>
+        /// A Boolean value that indicates whether the current device supports the headphone motion manager.
+        /// </summary>
+        /// <returns>A Boolean value</returns>
         public static bool IsAvailable => _unityHeadphoneDeviceMotionIsAvailable();
+        
+        /// <summary>
+        /// A Boolean value that indicates whether the headphone motion manager is active.
+        /// </summary>
+        /// <returns>A Boolean value</returns>
         public static bool IsActive => _unityHeadphoneDeviceMotionIsActive();
 
+        /// <summary>
+        /// A event when you connect headphones.
+        /// </summary>
         public static event Action OnConnected;
+
+        /// <summary>
+        /// A event when you disconnect headphones.
+        /// </summary>
         public static event Action OnDisconnected;
+
+        /// <summary>
+        /// A event when you received the headphones-motion event.
+        /// </summary>
         public static event Action<HeadphoneMotionData> OnUpdated;
 
+        /// <summary>
+        /// Starts device-motion updates
+        /// </summary>
         public static void Start()
         {
             _unityHeadphoneMotionSetEventCallback(OnMotionEvent);
             _unityHeadphoneMotionStart(OnMotionUpdate);
         }
 
+        /// <summary>
+        /// Stops device-motion updates
+        /// </summary>
         public static void Stop()
         {
             _unityHeadphoneMotionStop();

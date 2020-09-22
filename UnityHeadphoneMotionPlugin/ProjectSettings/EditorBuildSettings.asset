@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/HeadphoneMotionSample/InfoSample.unity
+    path: Assets/Samples/Index/Index.unity
+    guid: 1704aa2e176f944cb8ac3f508554d822
+  - enabled: 1
+    path: Assets/Samples/InfoSample/InfoSample.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Samples/SpacialAudioSample/SpacialAudioSample.unity
+    guid: fe558635b0abd47e69374ad3a2f66d7f
   m_configObjects: {}

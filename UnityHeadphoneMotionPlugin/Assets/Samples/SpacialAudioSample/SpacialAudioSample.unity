@@ -531,3 +531,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   earDistance: 0.215
+  autoStart: 1

@@ -14,7 +14,18 @@ public class InfoSample : MonoBehaviour
     StringBuilder sb = new StringBuilder();
     volatile bool needUpdate = true;
     object lockObj = new object();
-    HeadphoneMotionData motionData;
+    HeadphoneMotionData _motionData;
+    HeadphoneMotionData MotionData
+    {
+        get
+        {
+            lock (lockObj) return _motionData;
+        }
+        set
+        {
+            lock (lockObj) _motionData = value;
+        }
+    }
 
     void OnEnable()
     {
@@ -32,14 +43,11 @@ public class InfoSample : MonoBehaviour
         };
         HeadphoneMotionManager.OnUpdated += (HeadphoneMotionData data) =>
         {
-            lock (lockObj)
-            {
-                motionData = data;
-            }
+            MotionData = data;
             needUpdate = true;
         };
 
-        UpdateInfo(motionData);
+        UpdateInfo(_motionData);
     }
 
     void OnDisable()
@@ -52,14 +60,10 @@ public class InfoSample : MonoBehaviour
     {
         if (needUpdate)
         {
-            HeadphoneMotionData data;
-            lock (lockObj)
-            {
-                data = motionData;
-            }
-            needUpdate = false;
+            HeadphoneMotionData data = MotionData;
             UpdateInfo(data);
             UpdateAxis(data);
+            needUpdate = false;
         }
     }
     void OnToggleButtonClick()
@@ -86,7 +90,7 @@ public class InfoSample : MonoBehaviour
         }
     }
 
-    void UpdateInfo(HeadphoneMotionData data)
+    void UpdateInfo(in HeadphoneMotionData data)
     {
         bool isActive = HeadphoneMotionManager.IsActive;
         sb.Clear();
@@ -102,7 +106,7 @@ public class InfoSample : MonoBehaviour
         infoLabel.text = sb.ToString();
     }
 
-    void UpdateAxis(HeadphoneMotionData data)
+    void UpdateAxis(in HeadphoneMotionData data)
     {
         axis.transform.localRotation = data.rotation;
     }
